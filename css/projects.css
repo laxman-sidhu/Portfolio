@@ -1,0 +1,86 @@
+/* ============================================================
+   projects.css — Projects page
+   ============================================================ */
+
+/* page header → first section spacing */
+.page-hero { padding-bottom: clamp(1.2rem, 2.5vw, 1.8rem); }
+#main-projects { padding-top: clamp(2.2rem, 4.5vw, 3.4rem); }
+
+/* — grids: centered, cards keep a comfortable size — */
+.projects-grid {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 1.7rem;
+}
+.project-card {
+  flex: 0 1 252px;
+  background: var(--surface); border: 1.5px solid var(--lavender); border-radius: var(--radius);
+  overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow-sm);
+  transition: transform .35s cubic-bezier(.2,.7,.3,1), box-shadow .35s, border-color .35s;
+}
+.fun-grid .project-card { flex: 0 1 224px; }
+.project-card:hover { transform: translateY(-8px); box-shadow: var(--shadow); border-color: var(--lavender-deep); }
+
+.card-thumb { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--lavender); }
+.card-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .55s ease; }
+.project-card:hover .card-thumb img { transform: scale(1.07); }
+
+/* pastel placeholder when a project has no thumbnail yet */
+.thumb-placeholder {
+  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+  transition: transform .55s ease;
+}
+.project-card:hover .thumb-placeholder { transform: scale(1.05); }
+.thumb-placeholder span {
+  font-family: var(--font-display); font-size: 2.6rem; font-weight: 600; color: rgba(60,50,70,.45);
+}
+.tone-blush { background: linear-gradient(135deg, var(--blush), #fff); }
+.tone-sky { background: linear-gradient(135deg, var(--sky), #fff); }
+.tone-sage { background: linear-gradient(135deg, var(--sage), #fff); }
+.tone-peach { background: linear-gradient(135deg, var(--peach), #fff); }
+.tone-lilac { background: linear-gradient(135deg, var(--lilac), #fff); }
+.tone-mint { background: linear-gradient(135deg, var(--mint), #fff); }
+.tone-butter { background: linear-gradient(135deg, var(--butter), #fff); }
+.tone-rose { background: linear-gradient(135deg, var(--rose), #fff); }
+
+.card-badge {
+  position: absolute; top: 11px; left: 11px; font-size: .68rem; font-weight: 700;
+  letter-spacing: .05em; text-transform: uppercase; padding: .26rem .65rem;
+  border-radius: var(--radius-pill); backdrop-filter: blur(4px);
+}
+.badge-easy         { background: rgba(169,214,182,.92); color: #2f6b46; }
+.badge-intermediate { background: rgba(243,195,156,.92); color: #95592a; }
+.badge-difficult    { background: rgba(246,160,170,.92); color: #9c3340; }
+.card-badge.fun     { background: rgba(196,180,240,.95); color: #5a45a0; }
+
+.card-body { padding: 1rem 1.1rem 1.1rem; display: flex; flex-direction: column; flex: 1; gap: .5rem; }
+.card-title {
+  font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; line-height: 1.25;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.card-desc {
+  font-size: .85rem; color: var(--text-soft); line-height: 1.55;
+}
+.card-tech { display: flex; flex-wrap: wrap; gap: .4rem; }
+.card-tech span {
+  font-size: .72rem; font-weight: 600; color: var(--plum-deep);
+  background: var(--lavender); padding: .2rem .55rem; border-radius: var(--radius-pill);
+}
+.card-actions { display: flex; gap: .55rem; margin-top: auto; padding-top: .6rem; }
+.card-actions .btn { flex: 1; }
+
+/* divider between main & fun */
+.fun-section { background: linear-gradient(180deg, var(--bg), #fdf6f4); }
+
+.empty-note { text-align: center; color: var(--text-faint); font-size: .95rem; padding: 2rem 0; }
+
+@media (max-width: 620px) {
+  .projects-grid { gap: .8rem; }
+  .project-card, .fun-grid .project-card { flex: 0 1 calc(50% - .4rem); min-width: 0; }
+  .card-body { padding: .7rem .75rem .85rem; gap: .45rem; }
+  .card-title { font-size: .95rem; }
+  .card-desc { font-size: .78rem; line-height: 1.5; }
+  .card-tech { gap: .3rem; }
+  .card-tech span { font-size: .64rem; padding: .15rem .45rem; }
+  .card-badge { font-size: .6rem; padding: .2rem .5rem; }
+  .card-actions { flex-direction: column; gap: .4rem; padding-top: .5rem; }
+  .card-actions .btn { width: 100%; font-size: .82rem; padding: .5rem .6rem; }
+}
