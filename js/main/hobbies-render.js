@@ -58,10 +58,13 @@
       if (!cached || !cached.length) return;
       var avail = grid.clientWidth || grid.offsetWidth;
       if (!avail) return;
-      var TARGET = 184; // approx px per column → ~8 columns at a typical 100%-zoom desktop
-      var fit = Math.floor(avail / TARGET);
-      var minCols = avail >= 340 ? 2 : 1;       // never collapse to 1 column on phones
-      var n = Math.max(minCols, fit);
+      var TARGET = 184; // approx px per column on desktop
+      var n;
+      if (avail < 600) {
+        n = 3;                                  // phones / small screens: 3 across
+      } else {
+        n = Math.max(2, Math.floor(avail / TARGET));
+      }
       n = Math.max(1, Math.min(n, cached.length)); // never more columns than items
       if (grid.__cols === n) return; // column count unchanged → skip rebuild
       grid.__cols = n;

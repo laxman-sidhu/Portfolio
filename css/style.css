@@ -126,7 +126,8 @@ a { color: inherit; }
 }
 .nav-inner {
   height: var(--nav-h); display: flex; align-items: center; justify-content: space-between;
-  width: 100%; padding-inline: clamp(1.2rem, 4vw, 3.2rem);
+  width: 100%; max-width: var(--maxw); margin-inline: auto;
+  padding-inline: clamp(1.1rem, 5vw, 3rem);
 }
 .nav-logo {
   font-family: var(--font-display); font-weight: 600; font-size: 1.3rem;
@@ -221,6 +222,20 @@ html.reveal-on .reveal.visible { opacity: 1; transform: none; }
   }
   .nav-links.open { display: flex; }
   .nav-cta { width: 100%; text-align: center; }
+}
+
+/* ——————————————————————————————— Responsive section heads ——————————————————————————————— */
+/* On phones, shrink the eyebrow/title/sub a touch so blocks read compact and
+   consistent, and keep the eyebrow pill on a single line. */
+@media (max-width: 560px) {
+  .section-head { margin-bottom: 1.9rem; }
+  .eyebrow {
+    font-size: .64rem; letter-spacing: .1em;
+    padding: .26rem .7rem; margin-bottom: .7rem;
+    white-space: nowrap;
+  }
+  .section-title { font-size: clamp(1.35rem, 6vw, 1.65rem); }
+  .section-sub { font-size: .9rem; margin-top: .5rem; }
 }
 
 /* ——————————————————————————————— Responsive footer ——————————————————————————————— */
