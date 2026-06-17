@@ -30,12 +30,16 @@
   var GH_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
     '<path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.28-.01-1.04-.02-2.05-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.25 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.81 1.1.81 2.22 0 1.6-.01 2.9-.01 3.29 0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12.5C24 5.87 18.63.5 12 .5z"/></svg>';
 
-  function actionsHTML(p, isFun, sizeClass) {
+  function actionsHTML(p, isFun, sizeClass, context) {
     var demoLabel = isFun ? 'Try It' : 'Live Demo';
     var demo = has(p.demo)
       ? '<a class="btn btn-primary ' + sizeClass + '" href="' + p.demo + '" target="_blank" rel="noopener">' + demoLabel + ' <i data-lucide="external-link"></i></a>'
       : '';
-    var code = has(p.code)
+    // Fun project CARDS display only the "Try It" button; the GitHub/code link
+    // (when present) is shown only inside the pop-up. Main projects keep code in
+    // both the card and the pop-up, exactly as before.
+    var showCode = !(isFun && context === 'card');
+    var code = (showCode && has(p.code))
       ? '<a class="btn btn-outline ' + sizeClass + '" href="' + p.code + '" target="_blank" rel="noopener">' + GH_ICON + ' ' + (has(p.demo) ? 'Code' : 'View Code') + '</a>'
       : '';
     if (!demo && !code) return '';
@@ -48,7 +52,8 @@
   }
 
   function badgeHTML(p, isFun) {
-    if (isFun) return '<span class="card-badge fun">Fun</span>';
+    // Fun projects don't show a redundant "Fun" badge — the whole section is fun.
+    if (isFun) return '';
     var d = (p.difficulty || '').toLowerCase();
     var label = { easy: 'Easy', intermediate: 'Intermediate', difficult: 'Difficult' }[d];
     if (!label) return '';
@@ -57,7 +62,7 @@
 
   /* ---- CARD (short desc only, whole card clickable) ---- */
   function cardHTML(p, isFun, idx, group) {
-    var actions = actionsHTML(p, isFun, 'btn-sm');
+    var actions = actionsHTML(p, isFun, 'btn-sm', 'card');
     return (
       '<article class="project-card reveal' + (isFun ? ' fun-card' : '') + '"' +
         ' tabindex="0" role="button" aria-label="View details for ' + (p.name || 'project') + '"' +
@@ -69,7 +74,7 @@
           badgeHTML(p, isFun) +
           '<h3 class="card-title">' + (p.name || 'Untitled') + '</h3>' +
           (p.desc ? '<p class="card-desc">' + p.desc + '</p>' : '') +
-          tagsHTML(p.tags, 'card-tech') +
+          (isFun ? '' : tagsHTML(p.tags, 'card-tech')) +
           (actions ? '<div class="card-actions">' + actions + '</div>' : '') +
         '</div>' +
       '</article>'
@@ -196,13 +201,13 @@
     else { sd.style.display = 'none'; }
 
     var tech = overlay.querySelector('.pm-tech');
-    if (p.tags && p.tags.length) {
+    if (!isFun && p.tags && p.tags.length) {
       tech.style.display = '';
       tech.innerHTML = p.tags.map(function (t) { return '<span>' + t + '</span>'; }).join('');
-    } else { tech.style.display = 'none'; }
+    } else { tech.style.display = 'none'; tech.innerHTML = ''; }
 
     var acts = overlay.querySelector('.pm-actions');
-    var actionsMarkup = actionsHTML(p, isFun, 'btn');
+    var actionsMarkup = actionsHTML(p, isFun, 'btn', 'modal');
     if (actionsMarkup) { acts.style.display = ''; acts.innerHTML = actionsMarkup; }
     else { acts.style.display = 'none'; acts.innerHTML = ''; }
 

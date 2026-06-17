@@ -13,19 +13,32 @@
 .hobby-count { display: inline-flex; align-items: center; gap: .4rem; margin-top: .9rem; font-size: .82rem; font-weight: 600; color: var(--text-faint); }
 .hobby-count i { width: 15px; height: 15px; }
 
-/* full-width, centered masonry (JS distributes items into columns) */
+/* Justified gallery — like Google Photos / Flickr.
+   Every row is the SAME height (--row-h); each item's width follows the media's
+   own aspect ratio (--ar, set from natural dimensions once known). Items wrap
+   with a FIXED gap and every row is collectively centered — so landscape photos
+   become wider items (fewer per row) and portrait photos narrower (more per row).
+   This is a pure-CSS layout: no JS reflow or DOM rebuild on resize. */
 .hobby-block .shell-fluid { padding-inline: clamp(0.8rem, 2vw, 1.5rem); }
 .media-grid {
-  display: flex; justify-content: center; align-items: flex-start;
-  gap: 12px; width: 100%;
+  --row-h: 205px;          /* row height on desktop */
+  --gap: 12px;
+  display: flex; flex-wrap: wrap;
+  justify-content: center; align-content: flex-start;
+  gap: var(--gap); width: 100%;
 }
-.media-col { display: flex; flex-direction: column; gap: 12px; flex: 1 1 0; min-width: 0; max-width: 220px; }
 .media-item {
-  position: relative;
+  position: relative; flex: 0 0 auto;
+  height: var(--row-h);
+  width: calc(var(--row-h) * var(--ar, 1));
+  max-width: 100%;
   overflow: hidden; border-radius: 14px; cursor: pointer;
   background: var(--lavender); box-shadow: var(--shadow-sm);
 }
-.media-item img, .media-item video { width: 100%; height: auto; display: block; transition: transform .45s ease; }
+.media-item img, .media-item video {
+  width: 100%; height: 100%; display: block; object-fit: cover;
+  transition: transform .45s ease;
+}
 .media-item:hover img, .media-item:hover video { transform: scale(1.06); }
 .media-item::after {
   content: ''; position: absolute; inset: 0; background: rgba(60,40,70,0);
@@ -65,11 +78,30 @@
 .lb-next { right: 18px; top: 50%; transform: translateY(-50%); }
 .lb-prev:hover, .lb-next:hover { transform: translateY(-50%) scale(1.06); }
 
+@media (max-width: 1000px) {
+  .media-grid { --row-h: 200px; }
+}
 @media (max-width: 560px) {
   .hobby-block .shell-fluid { padding-inline: clamp(.6rem, 3vw, 1rem); }
-  .media-grid { gap: 8px; }
-  .media-col { gap: 8px; max-width: none; }
-  .media-item { border-radius: 11px; }
+  /* Mobile: a 3-column Pinterest-style masonry. Each tile spans the full column
+     width and keeps the media's natural aspect ratio (the --ar set per item),
+     so heights vary and tiles tuck under each other with a fixed gap. Pure CSS,
+     no JS. */
+  .media-grid {
+    --gap: 8px;
+    display: block;
+    column-count: 3;
+    column-gap: var(--gap);
+  }
+  .media-item {
+    width: 100%;
+    height: auto;
+    aspect-ratio: var(--ar, 1);
+    margin: 0 0 var(--gap);
+    border-radius: 11px;
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;  /* older mobile WebKit */
+  }
   .vid-badge { width: 22px; height: 22px; top: 6px; right: 6px; }
   .vid-badge i { width: 12px; height: 12px; }
   .lb-btn { width: 40px; height: 40px; }

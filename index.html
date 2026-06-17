@@ -10,11 +10,15 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/home.css" />
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Icon library: deferred so it no longer blocks first paint; the app calls
+       lucide.createIcons() once it's ready. -->
+  <script defer src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 
@@ -174,10 +178,12 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-  <script src="js/main/main.js"></script>
-  <script src="js/config/home-config.js"></script>
-  <script src="js/main/home-render.js"></script>
-  <script src="js/main/contact.js"></script>
+  <!-- Deferred so they don't block parsing/paint; deferred scripts run in order
+       after the document is parsed, before DOMContentLoaded. -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script defer src="js/main/main.js"></script>
+  <script defer src="js/config/home-config.js"></script>
+  <script defer src="js/main/home-render.js"></script>
+  <script defer src="js/main/contact.js"></script>
 </body>
 </html>

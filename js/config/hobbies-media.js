@@ -2,46 +2,114 @@
 // Re-run the .bat after adding or removing media in assets\Hobbies.
 window.HOBBIES_MEDIA = {
   "Beach": [
-    "IMG-20240626-WA0012.jpg.jpeg",
-    "IMG-20240626-WA0014.jpg.jpeg",
-    "IMG-20240629-WA0160.jpg.jpeg",
-    "IMG-20240629-WA0209.jpg.jpeg",
-    "IMG_20220808_194803-01-01.jpeg"
-  ],
+    "IMG-20240626-WA0012.jpg"
+    , 
+    "IMG-20240722-WA0020.jpg"
+    , 
+    "IMG-20240730-WA0009.jpg"
+    , 
+    "IMG-20251012-WA0052.jpg"
+    , 
+    "IMG-20251012-WA0060.jpg"
+    , 
+    "IMG-20251012-WA0115.jpg"
+    , 
+    "IMG-20251012-WA0118.jpg"
+    , 
+    "IMG-20251012-WA0126.jpg"
+    , 
+    "1000025131-01.jpeg"
+    , 
+    "IMG-20240629-WA0160.jpg.jpeg"
+    , 
+    "IMG-20240629-WA0209.jpg.jpeg"
+    , 
+    "WhatsApp Image 2025-07-10 at 4.16.24 PM.jpeg"
+    , 
+    "WhatsApp Image 2025-07-10 at 4.16.27 PM.jpeg"
+    , 
+    "WhatsApp Image 2025-07-10 at 4.16.28 PM (1).jpeg"
+    , 
+    "WhatsApp Image 2025-07-19 at 11.21.11 AM (15).jpeg"
+  ]
+  , 
   "Cycling": [
-    "1.jpeg",
-    "2.jpeg",
-    "3.jpeg",
-    "4.jpeg",
-    "5.jpeg",
-    "aa.jpeg",
-    "aaa.jpeg",
-    "IMG-20240624-WA0178.jpg.jpeg",
-    "IMG-20240624-WA0182.jpg.jpeg",
-    "IMG-20240629-WA0210.jpg.jpeg",
-    "IMG-20240629-WA0227.jpg.jpeg",
-    "IMG-20240723-WA0021.jpg.jpeg",
+    "1.jpeg"
+    , 
+    "2.jpeg"
+    , 
+    "3.jpeg"
+    , 
+    "4.jpeg"
+    , 
+    "5.jpeg"
+    , 
+    "aa.jpeg"
+    , 
+    "aaa.jpeg"
+    , 
+    "IMG-20240624-WA0178.jpg.jpeg"
+    , 
+    "IMG-20240624-WA0182.jpg.jpeg"
+    , 
+    "IMG-20240629-WA0210.jpg.jpeg"
+    , 
+    "IMG-20240629-WA0227.jpg.jpeg"
+    , 
+    "IMG-20240723-WA0021.jpg.jpeg"
+    , 
     "VID-20240721-WA0139.mp4"
-  ],
+  ]
+  , 
   "Dance": [
-    "1.jpeg",
-    "2.jpeg",
-    "3.jpeg",
-    "4.jpeg",
-    "5.jpeg",
-    "6.jpeg",
-    "7.jpeg",
-    "8.jpeg",
-    "9.jpeg",
-    "10.jpeg"
-  ],
+    "WhatsApp Image 2025-07-18 at 4.33.41 PM.jpeg"
+    , 
+    "WhatsApp Image 2025-07-18 at 4.33.42 PM.jpeg"
+    , 
+    "WhatsApp Image 2025-07-18 at 4.33.43 PM.jpeg"
+    , 
+    "WhatsApp Image 2025-07-18 at 4.33.45 PM.jpeg"
+    , 
+    "WhatsApp Image 2025-07-18 at 4.33.46 PM (1).jpeg"
+    , 
+    "WhatsApp Image 2025-07-18 at 4.33.46 PM.jpeg"
+    , 
+    "WhatsApp Image 2025-07-18 at 4.33.47 PM (1).jpeg"
+    , 
+    "WhatsApp Image 2025-07-18 at 4.33.47 PM.jpeg"
+    , 
+    "WhatsApp Image 2025-07-18 at 4.33.48 PM (1).jpeg"
+    , 
+    "WhatsApp Image 2025-07-18 at 4.33.48 PM.jpeg"
+    , 
+    "WhatsApp Image 2025-07-18 at 4.33.49 PM.jpeg"
+    , 
+    "WhatsApp Image 2025-07-18 at 4.33.50 PM.jpeg"
+    , 
+    "WhatsApp Image 2025-07-18 at 4.33.51 PM.jpeg"
+    , 
+    "WhatsApp Image 2025-07-18 at 4.33.52 PM (1).jpeg"
+    , 
+    "WhatsApp Image 2025-07-18 at 4.33.52 PM.jpeg"
+    , 
+    "WhatsApp Image 2025-07-18 at 4.33.53 PM (1).jpeg"
+    , 
+    "WhatsApp Image 2025-07-18 at 4.33.53 PM.jpeg"
+  ]
+  , 
   "Sports": [
-    "1.jpeg",
-    "2.jpeg",
-    "3.jpeg",
-    "4.mp4",
-    "5.mp4",
-    "6.jpeg",
+    "1.jpeg"
+    , 
+    "2.jpeg"
+    , 
+    "3.jpeg"
+    , 
+    "6.jpeg"
+    , 
     "7.jpeg"
+    , 
+    "4.mp4"
+    , 
+    "5.mp4"
   ]
 };

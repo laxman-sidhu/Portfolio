@@ -18,7 +18,7 @@
     var src = BASE + folder + '/' + file;
     if (VIDEO_RE.test(file)) {
       return '<div class="media-item is-video" data-type="video" data-src="' + src + '" data-caption="' + folder + '">' +
-               '<video src="' + src + '" autoplay muted loop playsinline preload="metadata"></video>' +
+               '<video src="' + src + '" muted loop playsinline preload="metadata"></video>' +
                '<span class="vid-badge"><i data-lucide="volume-2"></i></span>' +
              '</div>';
     }
@@ -47,50 +47,58 @@
     );
   }
 
-  function debounce(fn, ms) { var t; return function () { clearTimeout(t); t = setTimeout(fn, ms); }; }
-
-  // Distribute each grid's items into N centered columns. N grows with screen
-  // width but never exceeds the item count, so sparse hobbies stay centered.
-  function layoutMasonry() {
-    var grids = document.querySelectorAll('.media-grid');
-    Array.prototype.forEach.call(grids, function (grid) {
-      var cached = grid.__items;
-      if (!cached || !cached.length) return;
-      var avail = grid.clientWidth || grid.offsetWidth;
-      if (!avail) return;
-      var TARGET = 184; // approx px per column on desktop
-      var n;
-      if (avail < 600) {
-        n = 3;                                  // phones / small screens: 3 across
+  /* Give each item its true aspect ratio once the media reports dimensions.
+     The CSS sizes width as (row-height * --ar); before this resolves an item
+     shows as a neutral square, then snaps to its real shape. Vertical layout
+     stays stable because the row height is fixed. */
+  function applyRatios(scope) {
+    var media = scope.querySelectorAll('.media-item img, .media-item video');
+    Array.prototype.forEach.call(media, function (m) {
+      var item = m.closest('.media-item');
+      var set = function () {
+        var w = m.naturalWidth || m.videoWidth;
+        var h = m.naturalHeight || m.videoHeight;
+        if (w && h && item) item.style.setProperty('--ar', (w / h).toFixed(4));
+      };
+      if (m.tagName === 'IMG') {
+        if (m.complete && m.naturalWidth) set();
+        else m.addEventListener('load', set, { once: true });
       } else {
-        n = Math.max(2, Math.floor(avail / TARGET));
+        if (m.videoWidth) set();
+        else m.addEventListener('loadedmetadata', set, { once: true });
       }
-      n = Math.max(1, Math.min(n, cached.length)); // never more columns than items
-      if (grid.__cols === n) return; // column count unchanged → skip rebuild
-      grid.__cols = n;
-      grid.innerHTML = '';
-      var cols = [];
-      for (var i = 0; i < n; i++) {
-        var c = document.createElement('div');
-        c.className = 'media-col';
-        grid.appendChild(c);
-        cols.push(c);
-      }
-      for (var j = 0; j < cached.length; j++) { cols[j % n].appendChild(cached[j]); }
     });
+  }
+
+  /* Only the videos currently on screen play; the rest stay paused so the page
+     isn't decoding several looping clips at once (big win on mobile). */
+  function setupVideoPlayback(scope) {
+    var vids = scope.querySelectorAll('.media-grid video');
+    if (!vids.length) return;
+    if (!('IntersectionObserver' in window)) {
+      Array.prototype.forEach.call(vids, function (v) { var p = v.play(); if (p && p.catch) p.catch(function () {}); });
+      return;
+    }
+    var vio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var v = e.target;
+        if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+        else { v.pause(); }
+      });
+    }, { threshold: 0.25 });
+    Array.prototype.forEach.call(vids, function (v) { vio.observe(v); });
   }
 
   var root = document.getElementById('hobbiesRoot');
   var items = [];
   if (root) {
     root.innerHTML = CONFIG.map(blockHTML).join('');
-    // cache each grid's media items in natural order; build the global ordered list (for the lightbox)
-    Array.prototype.slice.call(document.querySelectorAll('.media-grid')).forEach(function (grid) {
-      grid.__items = Array.prototype.slice.call(grid.querySelectorAll('.media-item'));
-      items = items.concat(grid.__items);
-    });
-    layoutMasonry();
-    window.addEventListener('resize', debounce(layoutMasonry, 150));
+    // Items render directly into each justified grid in natural order; collect
+    // them for the lightbox and tag each with its global index.
+    items = Array.prototype.slice.call(root.querySelectorAll('.media-item'));
+    items.forEach(function (it, i) { it.dataset.idx = i; });
+    applyRatios(root);
+    setupVideoPlayback(root);
     if (window.__observeReveals) window.__observeReveals();
   }
 
@@ -128,7 +136,12 @@
     stage.querySelectorAll('video').forEach(function (v) { v.pause(); });
   }
 
-  items.forEach(function (it, i) { it.addEventListener('click', function () { open(i); }); });
+  if (root) {
+    root.addEventListener('click', function (e) {
+      var it = e.target.closest('.media-item');
+      if (it) open(parseInt(it.dataset.idx, 10));
+    });
+  }
   if (lb) {
     document.getElementById('lbClose').addEventListener('click', close);
     document.getElementById('lbPrev').addEventListener('click', function () { show(current - 1); });
