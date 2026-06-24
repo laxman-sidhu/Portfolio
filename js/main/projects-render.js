@@ -1,14 +1,6 @@
-/* ============================================================
-   projects-render.js — builds cards from projects-config.js
-   and powers the click-to-open project modal.
-   (you should not need to edit this file)
-   ------------------------------------------------------------
-   • Each card is clickable → opens a pop-up modal.
-   • The card shows the SHORT desc only.
-   • The modal shows everything + the rich-text LONG description,
-     loaded from the file named in `longDesc` in the config.
-   • longDesc: "None"  →  no long-description section is shown.
-   ============================================================ */
+// projects-render.js — builds cards from projects-config.js and powers the project modal.
+// All markup lives in the <template> elements in projects.html; this file only clones and fills them.
+// longDesc: "None" means no long-description section is shown.
 (function () {
   function has(link) {
     return link && String(link).trim() !== '' && String(link).trim().toLowerCase() !== 'none';
@@ -16,90 +8,108 @@
 
   var TONES = ['blush', 'sky', 'sage', 'peach', 'lilac', 'mint', 'butter', 'rose'];
 
-  function thumbHTML(p, idx) {
+  // Clone the first element of a <template> by id
+  function clone(id) {
+    return document.getElementById(id).content.firstElementChild.cloneNode(true);
+  }
+
+  function fillThumb(container, p, idx) {
+    container.replaceChildren();
     if (has(p.thumbnail)) {
-      return '<img src="' + p.thumbnail + '" alt="' + (p.name || '') + '" loading="lazy" decoding="async">';
+      var img = clone('tpl-thumb-img');
+      img.src = p.thumbnail;
+      img.alt = p.name || '';
+      container.appendChild(img);
+    } else {
+      var ph = clone('tpl-thumb-placeholder');
+      ph.classList.add('tone-' + TONES[idx % TONES.length]);
+      ph.querySelector('span').textContent = (p.name || '?').trim().charAt(0).toUpperCase();
+      container.appendChild(ph);
     }
-    var tone = TONES[idx % TONES.length];
-    var initial = (p.name || '?').trim().charAt(0).toUpperCase();
-    return '<div class="thumb-placeholder tone-' + tone + '"><span>' + initial + '</span></div>';
   }
 
-  // Lucide dropped its brand icons (incl. github), so use an inline SVG that
-  // always renders and inherits the button's text colour.
-  var GH_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
-    '<path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.28-.01-1.04-.02-2.05-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.25 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.81 1.1.81 2.22 0 1.6-.01 2.9-.01 3.29 0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12.5C24 5.87 18.63.5 12 .5z"/></svg>';
-
-  function actionsHTML(p, isFun, sizeClass, context) {
-    var demoLabel = isFun ? 'Try It' : 'Live Demo';
-    var demo = has(p.demo)
-      ? '<a class="btn btn-primary ' + sizeClass + '" href="' + p.demo + '" target="_blank" rel="noopener">' + demoLabel + ' <i data-lucide="external-link"></i></a>'
-      : '';
-    // Fun project CARDS display only the "Try It" button; the GitHub/code link
-    // (when present) is shown only inside the pop-up. Main projects keep code in
-    // both the card and the pop-up, exactly as before.
-    var showCode = !(isFun && context === 'card');
-    var code = (showCode && has(p.code))
-      ? '<a class="btn btn-outline ' + sizeClass + '" href="' + p.code + '" target="_blank" rel="noopener">' + GH_ICON + ' ' + (has(p.demo) ? 'Code' : 'View Code') + '</a>'
-      : '';
-    if (!demo && !code) return '';
-    return demo + code;
+  function fillTags(container, tags) {
+    container.replaceChildren();
+    (tags || []).forEach(function (t) {
+      var s = clone('tpl-tag');
+      s.textContent = t;
+      container.appendChild(s);
+    });
   }
 
-  function tagsHTML(tags, cls) {
-    if (!tags || !tags.length) return '';
-    return '<div class="' + cls + '">' + tags.map(function (t) { return '<span>' + t + '</span>'; }).join('') + '</div>';
-  }
-
-  function badgeHTML(p, isFun) {
-    // Fun projects don't show a redundant "Fun" badge — the whole section is fun.
-    if (isFun) return '';
+  // Difficulty badge info, or null when none applies
+  function badgeInfo(p, isFun) {
+    if (isFun) return null;
     var d = (p.difficulty || '').toLowerCase();
     var label = { easy: 'Easy', intermediate: 'Intermediate', difficult: 'Difficult' }[d];
-    if (!label) return '';
-    return '<span class="card-badge badge-' + d + '">' + label + '</span>';
+    return label ? { cls: 'badge-' + d, label: label } : null;
   }
 
-  /* ---- CARD (short desc only, whole card clickable) ---- */
-  function cardHTML(p, isFun, idx, group) {
-    var actions = actionsHTML(p, isFun, 'btn-sm', 'card');
-    return (
-      '<article class="project-card reveal' + (isFun ? ' fun-card' : '') + '"' +
-        ' tabindex="0" role="button" aria-label="View details for ' + (p.name || 'project') + '"' +
-        ' data-group="' + group + '" data-idx="' + idx + '">' +
-        '<div class="card-thumb">' +
-          thumbHTML(p, idx) +
-        '</div>' +
-        '<div class="card-body">' +
-          badgeHTML(p, isFun) +
-          '<h3 class="card-title">' + (p.name || 'Untitled') + '</h3>' +
-          (p.desc ? '<p class="card-desc">' + p.desc + '</p>' : '') +
-          (isFun ? '' : tagsHTML(p.tags, 'card-tech')) +
-          (actions ? '<div class="card-actions">' + actions + '</div>' : '') +
-        '</div>' +
-      '</article>'
-    );
+  // Build the Live Demo / Code buttons as a fragment
+  function buildActions(p, isFun, sizeClass, context) {
+    var frag = document.createDocumentFragment();
+    if (has(p.demo)) {
+      var d = clone('tpl-btn-demo');
+      if (sizeClass) d.classList.add(sizeClass);
+      d.href = p.demo;
+      d.querySelector('.btn-label').textContent = isFun ? 'Try It' : 'Live Demo';
+      frag.appendChild(d);
+    }
+    // Fun cards hide the code link (it still shows inside the pop-up); main projects keep it in both.
+    var showCode = !(isFun && context === 'card');
+    if (showCode && has(p.code)) {
+      var c = clone('tpl-btn-code');
+      if (sizeClass) c.classList.add(sizeClass);
+      c.href = p.code;
+      c.querySelector('.btn-label').textContent = has(p.demo) ? 'Code' : 'View Code';
+      frag.appendChild(c);
+    }
+    return frag;
+  }
+
+  // Build one card (short desc only, whole card clickable)
+  function buildCard(p, isFun, idx, group) {
+    var card = clone('tpl-project-card');
+    if (isFun) card.classList.add('fun-card');
+    card.setAttribute('aria-label', 'View details for ' + (p.name || 'project'));
+    card.setAttribute('data-group', group);
+    card.setAttribute('data-idx', idx);
+
+    fillThumb(card.querySelector('.card-thumb'), p, idx);
+
+    var badge = card.querySelector('.card-badge');
+    var bi = badgeInfo(p, isFun);
+    if (bi) { badge.classList.add(bi.cls); badge.textContent = bi.label; }
+    else badge.remove();
+
+    card.querySelector('.card-title').textContent = p.name || 'Untitled';
+
+    var desc = card.querySelector('.card-desc');
+    if (p.desc) desc.textContent = p.desc; else desc.remove();
+
+    var tech = card.querySelector('.card-tech');
+    if (!isFun && p.tags && p.tags.length) fillTags(tech, p.tags); else tech.remove();
+
+    var actions = card.querySelector('.card-actions');
+    var actFrag = buildActions(p, isFun, 'btn-sm', 'card');
+    if (actFrag.childNodes.length) actions.appendChild(actFrag); else actions.remove();
+
+    return card;
   }
 
   function render(targetId, list, isFun, group) {
     var el = document.getElementById(targetId);
     if (!el) return;
-    if (!list || !list.length) {
-      el.innerHTML = '<p class="empty-note">No projects added yet — open <code>js/config/projects-config.js</code> to add one.</p>';
-      return;
-    }
-    el.innerHTML = list.map(function (p, i) { return cardHTML(p, isFun, i, group); }).join('');
+    el.replaceChildren();
+    if (!list || !list.length) { el.appendChild(clone('tpl-empty-note')); return; }
+    list.forEach(function (p, i) { el.appendChild(buildCard(p, isFun, i, group)); });
   }
 
-  /* ============================================================
-     MODAL
-     ============================================================ */
+  // Modal
   var overlay, lastFocused;
   var LD_DIR = 'assets/Projects/Long Descriptions/';
 
-  /* Inject a <script> for every long-description file named in the config.
-     Using <script src> (instead of fetch) means it also works when the page
-     is opened directly from disk (file://), not just on a web server. */
+  // Inject a <script> for each long-description file so it also works from file://
   function preloadLongDescs() {
     window.LONGDESC = window.LONGDESC || {};
     var keys = {};
@@ -117,28 +127,8 @@
   }
 
   function buildModal() {
-    overlay = document.createElement('div');
-    overlay.className = 'pm-overlay';
-    overlay.setAttribute('role', 'dialog');
-    overlay.setAttribute('aria-modal', 'true');
-    overlay.innerHTML =
-      '<div class="pm-dialog">' +
-        '<button class="pm-close" aria-label="Close"><i data-lucide="x"></i></button>' +
-        '<div class="pm-scroll">' +
-          '<div class="pm-thumb"></div>' +
-          '<div class="pm-body">' +
-            '<div class="pm-badge"></div>' +
-            '<h2 class="pm-title" id="pmTitle"></h2>' +
-            '<p class="pm-shortdesc"></p>' +
-            '<div class="pm-tech"></div>' +
-            '<div class="pm-longdesc"></div>' +
-            '<div class="pm-actions"></div>' +
-          '</div>' +
-        '</div>' +
-        '<div class="pm-scrollhint" aria-hidden="true"><i data-lucide="chevrons-down"></i></div>' +
-      '</div>';
+    overlay = clone('tpl-project-modal');
     document.body.appendChild(overlay);
-    overlay.setAttribute('aria-labelledby', 'pmTitle');
 
     overlay.addEventListener('click', function (e) {
       if (e.target === overlay) closeModal();
@@ -151,7 +141,7 @@
     });
   }
 
-  /* show a bouncing "scroll for more" hint while there's hidden content below */
+  // Bouncing "scroll for more" hint while content is hidden below
   function updateScrollHint() {
     if (!overlay) return;
     var sc = overlay.querySelector('.pm-scroll');
@@ -164,36 +154,29 @@
   function loadLongDesc(p) {
     var box = overlay.querySelector('.pm-longdesc');
     box.classList.remove('loading');
-
-    if (!has(p.longDesc)) {           // "None" or empty → no section
-      box.style.display = 'none';
-      box.innerHTML = '';
-      return;
-    }
-
-    var key = String(p.longDesc).trim();
-    var html = (window.LONGDESC || {})[key];
-
-    if (html != null) {
-      box.style.display = '';
-      box.innerHTML = html;
-      if (window.lucide) window.lucide.createIcons();
-    } else {
-      // file missing or not loaded yet → hide rather than show an empty frame
-      box.style.display = 'none';
-      box.innerHTML = '';
-    }
+    var key = has(p.longDesc) ? String(p.longDesc).trim() : null;
+    var html = key ? (window.LONGDESC || {})[key] : null;
+    if (html != null) { box.style.display = ''; box.innerHTML = html; }
+    else { box.style.display = 'none'; box.replaceChildren(); }
   }
 
   function openModal(p, isFun, idx) {
     if (!overlay) buildModal();
     lastFocused = document.activeElement;
 
-    overlay.querySelector('.pm-thumb').innerHTML = thumbHTML(p, idx);
+    fillThumb(overlay.querySelector('.pm-thumb'), p, idx);
+
     var pmBadge = overlay.querySelector('.pm-badge');
-    var badgeMarkup = badgeHTML(p, isFun);
-    if (badgeMarkup) { pmBadge.style.display = ''; pmBadge.innerHTML = badgeMarkup; }
-    else { pmBadge.style.display = 'none'; pmBadge.innerHTML = ''; }
+    pmBadge.replaceChildren();
+    var bi = badgeInfo(p, isFun);
+    if (bi) {
+      var b = clone('tpl-badge');
+      b.classList.add(bi.cls);
+      b.textContent = bi.label;
+      pmBadge.appendChild(b);
+      pmBadge.style.display = '';
+    } else { pmBadge.style.display = 'none'; }
+
     overlay.querySelector('.pm-title').textContent = p.name || 'Untitled';
 
     var sd = overlay.querySelector('.pm-shortdesc');
@@ -201,24 +184,21 @@
     else { sd.style.display = 'none'; }
 
     var tech = overlay.querySelector('.pm-tech');
-    if (!isFun && p.tags && p.tags.length) {
-      tech.style.display = '';
-      tech.innerHTML = p.tags.map(function (t) { return '<span>' + t + '</span>'; }).join('');
-    } else { tech.style.display = 'none'; tech.innerHTML = ''; }
+    if (!isFun && p.tags && p.tags.length) { tech.style.display = ''; fillTags(tech, p.tags); }
+    else { tech.style.display = 'none'; tech.replaceChildren(); }
 
     var acts = overlay.querySelector('.pm-actions');
-    var actionsMarkup = actionsHTML(p, isFun, 'btn', 'modal');
-    if (actionsMarkup) { acts.style.display = ''; acts.innerHTML = actionsMarkup; }
-    else { acts.style.display = 'none'; acts.innerHTML = ''; }
+    acts.replaceChildren();
+    var actFrag = buildActions(p, isFun, '', 'modal');
+    if (actFrag.childNodes.length) { acts.style.display = ''; acts.appendChild(actFrag); }
+    else { acts.style.display = 'none'; }
 
     loadLongDesc(p);
 
     document.body.classList.add('pm-lock');
     overlay.classList.add('open');
-    overlay.querySelector('.pm-scroll').scrollTop = 0;   // always start at the top
-    if (window.lucide) window.lucide.createIcons();
+    overlay.querySelector('.pm-scroll').scrollTop = 0;
     overlay.querySelector('.pm-close').focus();
-    // check after layout settles (icons/images may change height)
     requestAnimationFrame(updateScrollHint);
     setTimeout(updateScrollHint, 120);
   }
@@ -230,13 +210,13 @@
     if (lastFocused && lastFocused.focus) lastFocused.focus();
   }
 
-  /* one delegated handler for both grids */
+  // One delegated handler for both grids
   function wireGrid(targetId, list, isFun) {
     var el = document.getElementById(targetId);
     if (!el) return;
 
     function handle(e, card) {
-      // let real links (Live Demo / Code) work without opening the modal
+      // Let real links (Live Demo / Code) work without opening the modal
       if (e.target.closest('a')) return;
       var idx = parseInt(card.getAttribute('data-idx'), 10);
       var p = list[idx];
@@ -254,15 +234,10 @@
     });
   }
 
-  /* ---- build everything ---- */
   preloadLongDescs();
-
   render('mainProjectsGrid', window.PROJECTS_MAIN, false, 'main');
   render('funProjectsGrid', window.PROJECTS_FUN, true, 'fun');
-
   wireGrid('mainProjectsGrid', window.PROJECTS_MAIN, false);
   wireGrid('funProjectsGrid', window.PROJECTS_FUN, true);
-
   if (window.__observeReveals) window.__observeReveals();
-  if (window.lucide) window.lucide.createIcons();
 })();

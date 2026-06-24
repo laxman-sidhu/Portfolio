@@ -1,19 +1,5 @@
-/* ============================================================
-   hobbies-config.js   ←  EDIT names / descriptions here (rarely)
-   ------------------------------------------------------------
-   This file holds the WORDS for each hobby.
-   The IMAGE/VIDEO FILE NAMES are filled in automatically by
-   double-clicking  update-hobbies.bat  (it writes hobbies-media.js).
-
-   • folder  : must match the folder name inside  assets/Hobbies/
-   • title   : heading shown on the page
-   • eyebrow : little label above the heading
-   • icon    : any emoji
-   • text    : the paragraph
-
-   To add a new hobby: make a folder in assets/Hobbies/<Name>,
-   add a block below with folder:"<Name>", then run the .bat.
-   ============================================================ */
+// hobbies-config.js — text for each hobby (folder must match a folder in assets/Hobbies/)
+// Media file names are filled in automatically by update-hobbies.bat (writes hobbies-media.js).
 
 window.HOBBIES = [
   {

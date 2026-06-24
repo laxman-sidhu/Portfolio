@@ -1,6 +1,4 @@
-/* ============================================================
-   hobbies.css — Hobbies page
-   ============================================================ */
+/* hobbies.css — hobbies page */
 
 .hobby-block { padding-block: clamp(2.4rem, 5vw, 3.6rem); }
 .hobby-block:nth-child(even) { background: var(--surface); }
@@ -11,17 +9,12 @@
 .hobby-head h2 .em { font-style: italic; color: var(--plum-deep); }
 .hobby-head p { color: var(--text-soft); font-size: 1rem; line-height: 1.7; max-width: 680px; margin-inline: auto; }
 .hobby-count { display: inline-flex; align-items: center; gap: .4rem; margin-top: .9rem; font-size: .82rem; font-weight: 600; color: var(--text-faint); }
-.hobby-count i { width: 15px; height: 15px; }
+.hobby-count i { font-size: 14px; }
 
-/* Justified gallery — like Google Photos / Flickr.
-   Every row is the SAME height (--row-h); each item's width follows the media's
-   own aspect ratio (--ar, set from natural dimensions once known). Items wrap
-   with a FIXED gap and every row is collectively centered — so landscape photos
-   become wider items (fewer per row) and portrait photos narrower (more per row).
-   This is a pure-CSS layout: no JS reflow or DOM rebuild on resize. */
+/* Justified gallery: every row shares --row-h; each item's width follows its --ar */
 .hobby-block .shell-fluid { padding-inline: clamp(0.8rem, 2vw, 1.5rem); }
 .media-grid {
-  --row-h: 205px;          /* row height on desktop */
+  --row-h: 205px;
   --gap: 12px;
   display: flex; flex-wrap: wrap;
   justify-content: center; align-content: flex-start;
@@ -50,10 +43,10 @@
   background: rgba(0,0,0,.5); color: #fff; display: flex; align-items: center; justify-content: center;
   backdrop-filter: blur(3px); pointer-events: none;
 }
-.vid-badge i { width: 14px; height: 14px; }
+.vid-badge i { font-size: 13px; }
 .media-empty { color: var(--text-faint); font-size: .9rem; padding: 1rem 0; text-align: center; width: 100%; }
 
-/* ——————————————————————————————— Lightbox ——————————————————————————————— */
+/* Lightbox */
 .lightbox {
   position: fixed; inset: 0; z-index: 2000; display: none;
   align-items: center; justify-content: center;
@@ -83,10 +76,7 @@
 }
 @media (max-width: 560px) {
   .hobby-block .shell-fluid { padding-inline: clamp(.6rem, 3vw, 1rem); }
-  /* Mobile: a 3-column Pinterest-style masonry. Each tile spans the full column
-     width and keeps the media's natural aspect ratio (the --ar set per item),
-     so heights vary and tiles tuck under each other with a fixed gap. Pure CSS,
-     no JS. */
+  /* Mobile: a 3-column masonry; each tile keeps its natural aspect ratio */
   .media-grid {
     --gap: 8px;
     display: block;
@@ -100,9 +90,9 @@
     margin: 0 0 var(--gap);
     border-radius: 11px;
     break-inside: avoid;
-    -webkit-column-break-inside: avoid;  /* older mobile WebKit */
+    -webkit-column-break-inside: avoid;
   }
   .vid-badge { width: 22px; height: 22px; top: 6px; right: 6px; }
-  .vid-badge i { width: 12px; height: 12px; }
+  .vid-badge i { font-size: 11px; }
   .lb-btn { width: 40px; height: 40px; }
 }

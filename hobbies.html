@@ -4,15 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hobbies · Laxman Sawant</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/hobbies.css" />
-  <script defer src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 
@@ -37,10 +35,10 @@
     </div>
   </header>
 
-  <!-- Hobby sections render here from hobbies-config.js + hobbies-media.js -->
+  <!-- hobby sections render here from hobbies-config.js + hobbies-media.js -->
   <main id="hobbiesRoot"></main>
 
-  <!-- LIGHTBOX -->
+  <!-- lightbox -->
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
     <button class="lb-btn lb-close" id="lbClose" aria-label="Close">&times;</button>
     <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous">&lsaquo;</button>
@@ -56,12 +54,40 @@
         <span class="footer-logo">Laxman<span>.</span></span>
         <p>© 2026 Laxman Sawant · Keep moving, keep creating.</p>
         <div class="social-icons">
-          <a class="social-icon" href="https://www.instagram.com/sawant_sidhu/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.15-3.23 1.66-4.77 4.92-4.92C8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.2-4.35-2.62-6.78-6.98-6.98C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
-          <a class="social-icon" href="https://www.youtube.com/@laxmansawant19" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.2C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></svg></a>
+          <a class="social-icon" href="https://www.instagram.com/sawant_sidhu/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a class="social-icon" href="https://www.youtube.com/@laxmansawant19" target="_blank" rel="noopener" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
         </div>
       </div>
     </div>
   </footer>
+
+  <!-- Markup templates: hobby sections and media tiles are built from these -->
+  <template id="tpl-hobby-block">
+    <section class="hobby-block">
+      <div class="shell">
+        <div class="hobby-head reveal">
+          <span class="eyebrow"></span>
+          <h2><span class="hobby-icon"></span> <span class="em"></span></h2>
+          <p class="hobby-text"></p>
+          <span class="hobby-count"><i class="fa-solid fa-image"></i> <span class="hobby-count-text"></span></span>
+        </div>
+      </div>
+      <div class="shell-fluid"><div class="media-grid reveal"></div></div>
+    </section>
+  </template>
+
+  <template id="tpl-media-image">
+    <div class="media-item" data-type="image"><img loading="lazy" decoding="async"></div>
+  </template>
+  <template id="tpl-media-video">
+    <div class="media-item is-video" data-type="video">
+      <video muted loop playsinline preload="metadata"></video>
+      <span class="vid-badge"><i class="fa-solid fa-volume-high"></i></span>
+    </div>
+  </template>
+  <template id="tpl-media-empty">
+    <p class="media-empty">No media yet — add files to <code></code> and run update-hobbies.bat.</p>
+  </template>
 
   <script defer src="js/main/main.js"></script>
   <script defer src="js/config/hobbies-config.js"></script>

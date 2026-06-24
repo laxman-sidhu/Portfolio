@@ -1,6 +1,4 @@
-/* ============================================================
-   contact.js — EmailJS contact form
-   ============================================================ */
+// contact.js — EmailJS contact form
 (function () {
   var EMAIL_PUBLIC_KEY  = "UFj38gwbmlz4eqVpC";
   var EMAIL_SERVICE_ID  = "service_tz1g2pt";
@@ -18,7 +16,13 @@
     e.preventDefault();
     status.textContent = ''; status.className = 'form-status';
     if (btn) btn.disabled = true;
-    if (btnText) btnText.innerHTML = '<span class="form-spin"></span> Sending…';
+    if (btnText) {
+      btnText.replaceChildren();
+      var spin = document.createElement('span');
+      spin.className = 'form-spin';
+      btnText.appendChild(spin);
+      btnText.appendChild(document.createTextNode(' Sending…'));
+    }
 
     var data = {
       from_name: document.getElementById('from_name').value,

@@ -1,8 +1,6 @@
-/* ============================================================
-   home.css — Home / landing page
-   ============================================================ */
+/* home.css — home / landing page */
 
-/* ——————————————————————————————— Hero (full page) ——————————————————————————————— */
+/* Hero (full page) */
 .hero {
   position: relative; overflow: hidden;
   min-height: 100vh; display: flex; align-items: center;
@@ -72,10 +70,10 @@
   text-decoration: none; transition: color .25s;
 }
 .hero-hint:hover { color: var(--plum-deep); }
-.hero-hint i { width: 15px; height: 15px; animation: nudge 1.8s ease-in-out infinite; }
+.hero-hint i { font-size: 14px; animation: nudge 1.8s ease-in-out infinite; }
 @keyframes nudge { 0%,100% { transform: translateY(0);} 50% { transform: translateY(4px);} }
 
-/* ——— Home navbar: sits under the hero, slides up & sticks once scrolled past ——— */
+/* Home navbar: sits under the hero, slides up & sticks once scrolled past */
 .navbar { position: absolute; top: auto; left: 0; right: 0; width: 100%; box-shadow: none; }
 .navbar.sticky {
   position: fixed; top: 0; left: 0; right: 0; width: 100%;
@@ -86,7 +84,7 @@
 }
 @keyframes navSlide { from { transform: translateY(-100%); opacity: .5; } to { transform: translateY(0); opacity: 1; } }
 
-/* ——————————————————————————————— Intro strip ——————————————————————————————— */
+/* Intro strip */
 .intro { background: var(--surface); border-block: 1px solid var(--line); }
 .intro-inner {
   display: grid; grid-template-columns: auto 1fr; gap: clamp(1.4rem, 4vw, 3rem); align-items: center;
@@ -98,7 +96,7 @@
 .intro p { font-size: clamp(1.02rem, 1.8vw, 1.2rem); color: var(--text); line-height: 1.7; }
 .intro p strong { color: var(--plum-deep); font-weight: 600; }
 
-/* ——————————————————————————————— Skills (fill width, smaller cards) ——————————————————————————————— */
+/* Skills (fill width, smaller cards) */
 .skills-grid {
   display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;
 }
@@ -129,7 +127,7 @@
   background: var(--bg); border: 1px solid var(--line); padding: .2rem .6rem; border-radius: var(--radius-pill);
 }
 
-/* ——————————————————————————————— Timeline (experience + education) ——————————————————————————————— */
+/* Timeline (experience + education) */
 .sec-skills { background: var(--surface); }
 .sec-experience { background: linear-gradient(180deg, var(--bg-2), var(--bg)); }
 .sec-education { background: linear-gradient(180deg, var(--bg), #fbeef2); }
@@ -177,7 +175,7 @@
   background: var(--lilac); padding: .18rem .6rem; border-radius: var(--radius-pill);
 }
 
-/* ——————————————————————————————— Contact ——————————————————————————————— */
+/* Contact */
 .contact { background: var(--surface); }
 .contact-grid {
   display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(1.6rem, 4vw, 3rem); align-items: stretch;
@@ -189,7 +187,7 @@
   display: flex; align-items: center; justify-content: center; color: var(--plum-deep);
   background: var(--lavender);
 }
-.ci-ico i, .ci-ico svg { width: 19px; height: 19px; }
+.ci-ico i { font-size: 18px; }
 .ci-item strong { display: block; font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color: var(--text-faint); }
 .ci-item a, .ci-item span { font-size: .96rem; color: var(--text); text-decoration: none; }
 .ci-item a:hover { color: var(--plum-deep); }
@@ -219,21 +217,26 @@
 .form-spin { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg);} }
 
-/* ——————————————————————————————— Responsive ——————————————————————————————— */
+/* Responsive */
 @media (max-width: 860px) {
   .contact-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
+  /* Start the hero content higher so the Contact button stays fully in view */
+  .hero {
+    min-height: 100svh;
+    align-items: flex-start;
+    padding-top: clamp(2.5rem, 7vh, 4rem);
+    padding-bottom: 2.6rem;
+  }
   .hero-avatar { width: 190px; height: 190px; border-radius: 28px; }
   .hero-btns { flex-direction: column; align-items: stretch; width: 100%; max-width: 320px; }
 
-  /* Skills is the first block after the hero, where the navbar snaps to
-     fixed — give it extra top room so the "What I work with" eyebrow is
-     never tucked under the bar. */
+  /* Extra top room so the eyebrow is never tucked under the sticky bar */
   .sec-skills { padding-top: calc(var(--nav-h) + 1.6rem); }
   #skills { scroll-margin-top: calc(var(--nav-h) + 8px); }
 
-  /* skills: two cards per row, a little more compact */
+  /* Skills: two cards per row, a little more compact */
   .skills-grid { gap: .7rem; }
   .skill-card { flex: 1 1 calc(50% - .35rem); min-width: 0; padding: 1rem .7rem; }
   .skill-ico { width: 38px; height: 38px; margin-bottom: .55rem; font-size: 1.2rem; }
@@ -241,8 +244,7 @@
   .skill-chips { gap: .35rem; }
   .skill-chips span { font-size: .7rem; padding: .16rem .5rem; }
 
-  /* Timeline (experience + education): scale the cards down so they read
-     consistently with the rest of the page on a narrow screen. */
+  /* Timeline: scale the cards down so they read consistently on narrow screens */
   .timeline { padding-left: 1.9rem; }
   .tl-dot { left: calc(-1.9rem + 2px); top: 1.15rem; width: 14px; height: 14px; }
   .tl-card { padding: 1rem 1.05rem; }
@@ -256,10 +258,9 @@
   .tl-tags { gap: .35rem; margin-top: .5rem; }
   .tl-tags span { font-size: .68rem; padding: .16rem .5rem; }
 
-  /* Contact details: nudge the whole list in from the edge so it doesn't
-     sit flush against the screen border. */
+  /* Nudge the contact list in from the edge */
   .contact-info { padding-left: .5rem; }
   .ci-ico { width: 38px; height: 38px; }
-  .ci-ico i, .ci-ico svg { width: 17px; height: 17px; }
+  .ci-ico i { font-size: 16px; }
   .ci-item a, .ci-item span { font-size: .92rem; }
 }

@@ -1,75 +1,71 @@
-/* ============================================================
-   home-render.js — builds skills / experience / education
-   from home-config.js  (you should not need to edit this)
-   ============================================================ */
+// home-render.js — builds skills / experience / education from home-config.js.
+// All markup lives in the <template> elements in index.html; this file only clones and fills them.
 (function () {
-  function esc(s) { return (s == null ? '' : String(s)); }
-
-  /* ---- Skills ---- */
-  function skillCard(c) {
-    var chips = (c.items || []).map(function (s) { return '<span>' + esc(s) + '</span>'; }).join('');
-    return (
-      '<div class="skill-card reveal" data-tone="' + esc(c.tone || 'lavender') + '">' +
-        '<div class="skill-ico">' + esc(c.icon || '✨') + '</div>' +
-        '<h3>' + esc(c.title) + '</h3>' +
-        '<div class="skill-chips">' + chips + '</div>' +
-      '</div>'
-    );
+  function clone(id) {
+    return document.getElementById(id).content.firstElementChild.cloneNode(true);
   }
+
+  function fillChips(container, items) {
+    container.replaceChildren();
+    (items || []).forEach(function (s) {
+      var chip = clone('tpl-chip');
+      chip.textContent = s;
+      container.appendChild(chip);
+    });
+  }
+
+  // Skills
   var skillsEl = document.getElementById('skillsGrid');
-  if (skillsEl && window.SKILLS) skillsEl.innerHTML = window.SKILLS.map(skillCard).join('');
+  if (skillsEl && window.SKILLS) {
+    skillsEl.replaceChildren();
+    window.SKILLS.forEach(function (c) {
+      var card = clone('tpl-skill-card');
+      card.setAttribute('data-tone', c.tone || 'lavender');
+      card.querySelector('.skill-ico').textContent = c.icon || '✨';
+      card.querySelector('h3').textContent = c.title || '';
+      fillChips(card.querySelector('.skill-chips'), c.items);
+      skillsEl.appendChild(card);
+    });
+  }
 
-  /* ---- Experience (timeline) ---- */
-  function tags(arr) {
-    if (!arr || !arr.length) return '';
-    return '<div class="tl-tags">' + arr.map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') + '</div>';
-  }
-  function expItem(e) {
-    return (
-      '<div class="tl-item reveal" data-type="experience">' +
-        '<span class="tl-dot"></span>' +
-        '<div class="tl-card">' +
-          '<div class="tl-meta">' +
-            '<span class="tl-year">' + esc(e.period) + '</span>' +
-            '<span class="tl-kind">Experience</span>' +
-          '</div>' +
-          '<h3>' + esc(e.role) + '</h3>' +
-          '<p class="tl-place">' + esc(e.company) + (e.place ? ' · ' + esc(e.place) : '') + '</p>' +
-          (e.desc ? '<p class="tl-desc">' + esc(e.desc) + '</p>' : '') +
-          tags(e.tags) +
-        '</div>' +
-      '</div>'
-    );
-  }
+  // Experience (timeline)
   var expWrap = document.getElementById('experienceSection');
   var expEl = document.getElementById('experienceTimeline');
   if (expEl && window.EXPERIENCE && window.EXPERIENCE.length) {
-    expEl.innerHTML = window.EXPERIENCE.map(expItem).join('');
+    expEl.replaceChildren();
+    window.EXPERIENCE.forEach(function (e) {
+      var item = clone('tpl-exp-item');
+      item.querySelector('.tl-year').textContent = e.period || '';
+      item.querySelector('h3').textContent = e.role || '';
+      item.querySelector('.tl-place').textContent = (e.company || '') + (e.place ? ' · ' + e.place : '');
+      var desc = item.querySelector('.tl-desc');
+      if (e.desc) desc.textContent = e.desc; else desc.remove();
+      var tagsBox = item.querySelector('.tl-tags');
+      if (e.tags && e.tags.length) fillChips(tagsBox, e.tags); else tagsBox.remove();
+      expEl.appendChild(item);
+    });
   } else if (expWrap) {
-    expWrap.style.display = 'none'; // hide section if no experience
+    expWrap.style.display = 'none'; // Hide the section if there is no experience
   }
 
-  /* ---- Education (timeline) ---- */
-  function eduItem(e) {
-    return (
-      '<div class="tl-item reveal" data-type="education">' +
-        '<span class="tl-dot"></span>' +
-        '<div class="tl-card">' +
-          '<div class="tl-meta">' +
-            '<span class="tl-year">' + esc(e.period) + '</span>' +
-            '<span class="tl-kind">Education</span>' +
-            (e.score ? '<span class="tl-score">' + esc(e.score) + '</span>' : '') +
-          '</div>' +
-          '<h3>' + esc(e.title) + '</h3>' +
-          (e.place ? '<p class="tl-place">' + esc(e.place) + '</p>' : '') +
-          (e.desc ? '<p class="tl-desc">' + esc(e.desc) + '</p>' : '') +
-        '</div>' +
-      '</div>'
-    );
-  }
+  // Education (timeline)
   var eduEl = document.getElementById('educationTimeline');
-  if (eduEl && window.EDUCATION) eduEl.innerHTML = window.EDUCATION.map(eduItem).join('');
+  if (eduEl && window.EDUCATION) {
+    eduEl.replaceChildren();
+    window.EDUCATION.forEach(function (e) {
+      var item = clone('tpl-edu-item');
+      item.querySelector('.tl-year').textContent = e.period || '';
+      var score = item.querySelector('.tl-score');
+      if (e.score) score.textContent = e.score; else score.remove();
+      item.querySelector('h3').textContent = e.title || '';
+      var place = item.querySelector('.tl-place');
+      if (e.place) place.textContent = e.place; else place.remove();
+      var desc = item.querySelector('.tl-desc');
+      if (e.desc) desc.textContent = e.desc; else desc.remove();
+      eduEl.appendChild(item);
+    });
+  }
 
-  // re-observe freshly added reveal elements (main.js may have run already)
+  // Re-observe freshly added reveal elements
   if (window.__observeReveals) window.__observeReveals();
 })();

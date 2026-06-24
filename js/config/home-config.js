@@ -1,16 +1,6 @@
-/* ============================================================
-   home-config.js   ←  EDIT skills / experience / education here
-   ------------------------------------------------------------
-   Everything on the home page (besides the hero text) is built
-   from the three lists below. No HTML editing needed.
-   ============================================================ */
+// home-config.js — edit skills / experience / education here
 
-/* ---------- SKILLS ----------
-   Add a whole new CATEGORY: copy a { ... } block.
-   Add SKILLS inside a category: just add strings to its "items".
-   icon: any emoji.  tone: picks the pastel colour
-        (blush | rose | peach | butter | sage | mint | sky | lavender | lilac)
-*/
+// Skills — tone: blush | rose | peach | butter | sage | mint | sky | lavender | lilac
 window.SKILLS = [
   { icon: "🐍", title: "Languages",        tone: "lavender", items: ["Python", "SQL", "R", "JavaScript"] },
   { icon: "📊", title: "Analytics & Viz",  tone: "sky",      items: ["Pandas", "NumPy", "Power BI", "Tableau"] },
@@ -19,10 +9,7 @@ window.SKILLS = [
   // , { icon: "☁️", title: "Cloud", tone: "mint", items: ["AWS", "GCP"] }
 ];
 
-/* ---------- WORK EXPERIENCE ----------
-   Dummy data for now — replace with your real roles later.
-   Leave the list empty ( [] ) to hide the whole section.
-*/
+// Work experience — leave the list empty ([]) to hide the section
 window.EXPERIENCE = [
   {
     period: "2025 — Present",
@@ -42,9 +29,7 @@ window.EXPERIENCE = [
   }
 ];
 
-/* ---------- EDUCATION ----------
-   score is optional (shown as a pill). Leave it out to hide it.
-*/
+// Education — score is optional (shown as a pill)
 window.EDUCATION = [
   {
     period: "2021 — 2025",

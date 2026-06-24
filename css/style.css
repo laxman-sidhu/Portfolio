@@ -1,8 +1,4 @@
-/* ============================================================
-   style.css — Shared design system
-   Laxman Sawant · Portfolio
-   Aesthetic: soft pastel editorial · compact & professional
-   ============================================================ */
+/* style.css — shared design system */
 
 :root {
   /* — Pastel palette (soft, multi-shade) — */
@@ -92,7 +88,7 @@ a { color: inherit; }
 .page-title em { font-style: italic; color: var(--plum-deep); }
 .page-desc { color: var(--text-soft); font-size: 1.04rem; line-height: 1.6; }
 
-/* ——————————————————————————————— Buttons ——————————————————————————————— */
+/* Buttons */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
   padding: 0.62rem 1.3rem; border-radius: var(--radius-pill);
@@ -101,7 +97,7 @@ a { color: inherit; }
   transition: transform .25s ease, box-shadow .25s ease, background .25s ease, color .25s ease;
   white-space: nowrap;
 }
-.btn i, .btn svg { width: 17px; height: 17px; }
+.btn i { font-size: 16px; }
 .btn-primary { background: var(--plum); color: #fff; box-shadow: 0 8px 20px rgba(138,115,201,.28); }
 .btn-primary:hover { background: var(--plum-deep); transform: translateY(-2px); box-shadow: 0 12px 26px rgba(138,115,201,.36); }
 .btn-soft { background: var(--surface); color: var(--plum-deep); box-shadow: var(--shadow-sm); }
@@ -111,7 +107,7 @@ a { color: inherit; }
 .btn-sm { padding: 0.5rem 1rem; font-size: 0.82rem; }
 .btn-block { width: 100%; }
 
-/* ——————————————————————————————— Navbar ——————————————————————————————— */
+/* Navbar */
 .navbar {
   position: sticky; top: 0; z-index: 900;
   background: rgba(251, 249, 246, 0.82);
@@ -159,7 +155,7 @@ a { color: inherit; }
 .hamburger.active span:nth-child(2) { opacity: 0; }
 .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* ——————————————————————————————— Section headers ——————————————————————————————— */
+/* Section headers */
 .section { padding-block: clamp(3rem, 7vw, 5rem); }
 .section-head { text-align: center; margin-bottom: 2.6rem; }
 .eyebrow {
@@ -175,7 +171,7 @@ a { color: inherit; }
 .section-title em { font-style: italic; color: var(--plum-deep); }
 .section-sub { color: var(--text-soft); margin-top: 0.6rem; font-size: 0.98rem; }
 
-/* ——————————————————————————————— Footer ——————————————————————————————— */
+/* Footer */
 .footer { background: #2f2b35; color: rgba(255,255,255,.72); padding-block: 3rem 1.4rem; margin-top: 3.5rem; }
 .footer-top {
   display: flex; flex-wrap: wrap; gap: 2rem 3rem; align-items: flex-start;
@@ -197,12 +193,11 @@ a { color: inherit; }
   display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.75);
   text-decoration: none; transition: .25s;
 }
-.social-icon i, .social-icon svg { width: 16px; height: 16px; }
+.social-icon i { font-size: 17px; }
 .social-icon:hover { background: var(--blush-deep); color: #2f2b35; transform: translateY(-2px); }
 
-/* ——————————————————————————————— Scroll reveal ——————————————————————————————— */
-/* Hidden state only applies when JS marks the page ready, so content is
-   always visible if JS is off or the observer fails. */
+/* Scroll reveal */
+/* Hidden only once JS marks the page ready, so content shows if JS is off */
 .reveal { transition: opacity .6s ease, transform .6s ease; }
 html.reveal-on .reveal { opacity: 0; transform: translateY(22px); }
 html.reveal-on .reveal.visible { opacity: 1; transform: none; }
@@ -210,7 +205,7 @@ html.reveal-on .reveal.visible { opacity: 1; transform: none; }
   html.reveal-on .reveal { opacity: 1; transform: none; }
 }
 
-/* ——————————————————————————————— Responsive nav ——————————————————————————————— */
+/* Responsive nav */
 @media (max-width: 720px) {
   .hamburger { display: flex; }
   .nav-links {
@@ -224,9 +219,8 @@ html.reveal-on .reveal.visible { opacity: 1; transform: none; }
   .nav-cta { width: 100%; text-align: center; }
 }
 
-/* ——————————————————————————————— Responsive section heads ——————————————————————————————— */
-/* On phones, shrink the eyebrow/title/sub a touch so blocks read compact and
-   consistent, and keep the eyebrow pill on a single line. */
+/* Responsive section heads */
+/* On phones, shrink the eyebrow/title/sub a touch and keep the pill on one line */
 @media (max-width: 560px) {
   .section-head { margin-bottom: 1.9rem; }
   .eyebrow {
@@ -238,7 +232,7 @@ html.reveal-on .reveal.visible { opacity: 1; transform: none; }
   .section-sub { font-size: .9rem; margin-top: .5rem; }
 }
 
-/* ——————————————————————————————— Responsive footer ——————————————————————————————— */
+/* Responsive footer */
 @media (max-width: 640px) {
   .footer-top { flex-flow: row wrap; align-items: flex-start; text-align: center; gap: 1.8rem 0; }
   .footer-brand { flex: 1 1 100%; max-width: none; }

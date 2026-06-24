@@ -1,9 +1,7 @@
-/* ============================================================
-   main.js — shared site behaviour
-   ============================================================ */
+// main.js — shared site behaviour
 (function () {
-  // Navbar: on the home page it hides under the hero and slides up to stick;
-  // on other pages it's a normal sticky bar that gains a shadow on scroll.
+  // Navbar: hides under the hero and slides up to stick on the home page;
+  // a normal sticky bar that gains a shadow on scroll everywhere else.
   var navbar = document.getElementById('navbar');
   var hero = document.getElementById('hero');
   if (navbar) {
@@ -33,7 +31,7 @@
     });
   }
 
-  // Scroll reveal
+  // Scroll reveal: hidden state only applies once JS marks the page ready
   if ('IntersectionObserver' in window) {
     document.documentElement.classList.add('reveal-on');
     var show = function (el) { el.classList.add('visible'); };
@@ -49,7 +47,7 @@
     window.__observeReveals = function () {
       var els = document.querySelectorAll('.reveal:not(.reveal-watched)');
       els.forEach(function (el) { el.classList.add('reveal-watched'); io.observe(el); });
-      // safety net: never let anything stay invisible
+      // Safety net: never let anything stay invisible
       clearTimeout(window.__revealTimer);
       window.__revealTimer = setTimeout(function () {
         document.querySelectorAll('.reveal').forEach(show);
@@ -57,11 +55,4 @@
     };
     window.__observeReveals();
   }
-
-  // Lucide icons (loaded after this script if present)
-  window.addEventListener('load', function () {
-    if (window.lucide && typeof window.lucide.createIcons === 'function') {
-      window.lucide.createIcons();
-    }
-  });
 })();
