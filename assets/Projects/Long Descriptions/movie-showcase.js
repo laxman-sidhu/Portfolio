@@ -13,19 +13,33 @@ window.LONGDESC = window.LONGDESC || {};
 window.LONGDESC["movie-showcase"] = `
 <h3>Overview</h3>
 <p>
-  <strong>Movie Showcase</strong> is a genre-organized gallery of every film
-  I've watched. Each title is laid out as a clean card with a live poster pulled
-  straight from <em>TMDB</em>, so the page always looks fresh without me hand-saving
-  a single image.
+  <strong>Movie Showcase</strong> is a genre-organized gallery of everything
+  I've watched - films and web series alike. Every title is laid out as a clean
+  card with its poster loaded live, and the whole catalog is driven by a single
+  <em>Google Sheet</em>, so adding a movie is as simple as typing a new row.
 </p>
 
 <h4>Highlights</h4>
 <ul>
-  <li>Movies grouped automatically by <strong>genre</strong>.</li>
-  <li>Posters fetched live from the <strong>TMDB API</strong>.</li>
+  <li>Titles split into sections like <strong>Hollywood</strong>, <strong>Bollywood</strong>, <strong>Tollywood</strong>, Other Languages and Web Series.</li>
+  <li>Posters pulled live from a link stored alongside each title.</li>
+  <li>Instant <strong>search</strong> by name plus filtering by genre.</li>
+  <li>Tap any card for a full-screen detail pop-up.</li>
   <li>Responsive grid that reflows neatly on phones and desktops.</li>
-  <li>Easy to extend - add a title and the card builds itself.</li>
 </ul>
 
-<p><em>Built with plain HTML, CSS and JavaScript - no frameworks.</em></p>
+<h4>Live stats</h4>
+<p>
+  The About page keeps a running <strong>count for every movie industry</strong> -
+  Hollywood, Bollywood, Tollywood and the rest - read straight from the sheet and
+  animated as the numbers tick up, alongside a grand total across all categories.
+  The counts refresh on their own, so the page always reflects what I've actually watched.
+</p>
+
+<h4>Tech notes</h4>
+<p>Built with plain <code>HTML</code>, <code>CSS</code> and <code>JavaScript</code> - no frameworks - with all data served from published <em>Google Sheets</em>.</p>
+
+<blockquote>
+  The idea was simple: keep a living, self-updating record of my watch history that looks good and runs anywhere.
+</blockquote>
 `;

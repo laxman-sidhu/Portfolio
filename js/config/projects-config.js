@@ -97,7 +97,7 @@ window.PROJECTS_FUN = [
     desc: "A genre-organized showcase of every movie I've watched, with dynamic listings and live TMDB posters.",
     tags: ["HTML", "CSS", "JavaScript"],
     difficulty: "intermediate",
-    code: "https://github.com/LaxmanSidhu/Movie-Showcase",
+    code: "None",
     demo: "https://laxman-sidhu.github.io/Movie-Showcase/",
     longDesc: "movie-showcase"
   },
@@ -107,7 +107,7 @@ window.PROJECTS_FUN = [
     desc: "A shared digital bookshelf displaying the books read by me and my sibling, side by side.",
     tags: ["HTML", "CSS", "JavaScript"],
     difficulty: "easy",
-    code: "https://github.com/LaxmanSidhu/Book-Verse",
+    code: "None",
     demo: "https://laxmansidhu.github.io/Book-Verse/index.html",
     longDesc: "book-verse"
   },
@@ -117,7 +117,7 @@ window.PROJECTS_FUN = [
     desc: "My personal travel dashboard — every place I've been, every place I want to go, and the adventures along the way.",
     tags: ["HTML", "CSS", "JavaScript"],
     difficulty: "intermediate",
-    code: "https://github.com/LaxmanSidhu/Travel-Dashboard",
+    code: "None",
     demo: "https://laxman-sidhu.github.io/Travel-Dashboard/",
     longDesc: "sidtrails"
   }
