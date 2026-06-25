@@ -25,7 +25,7 @@ window.LONGDESC["olympics-analysis-and-prediction"] = `
   <li>Medal tallies that can be filtered by year and by country.</li>
   <li>Top statistics across editions, host cities, sports, events, nations and athletes.</li>
   <li>Trends over time, such as participating countries and athlete counts per edition.</li>
-  <li>Interactive charts built with <em>Plotly</em>, <em>Seaborn</em> and <em>Matplotlib</em>.</li>
+  <li>Interactive charts built with <em>Plotly</em>.</li>
 </ul>
 
 <h4>Interactive Map</h4>
@@ -53,8 +53,8 @@ window.LONGDESC["olympics-analysis-and-prediction"] = `
 <p>
   Built in <code>Python</code> with <code>Streamlit</code>, <code>pandas</code> and
   <code>numpy</code> for the data work, <code>scikit-learn</code> for the model,
-  <code>plotly</code>, <code>seaborn</code> and <code>matplotlib</code> for charts, and
-  <code>folium</code> with <code>geopandas</code> for the map. The prediction core is small:
+  <code>plotly</code> for charts, and <code>folium</code> with <code>geopandas</code> for the
+  map. The prediction core is small:
 </p>
 <pre><code>import joblib
 

@@ -51,7 +51,7 @@
 window.PROJECTS_MAIN = [
   {
     name: "Resume Screening",
-    thumbnail: "assets/Projects/ResumeScreening.png",                
+    thumbnail: "assets/Projects/Resume Screening.png",                
     desc: "A Flask web app that screens resumes against a job description with NLP ranking, optimizes them using Google Gemini, and runs built in aptitude tests, all in one hiring workflow.",
     tags: ["Python", "NLP", "scikit-learn", "Flask", "Gemini"],
     difficulty: "intermediate",
@@ -63,19 +63,19 @@ window.PROJECTS_MAIN = [
     name: "ML Hub",
     thumbnail: "None",
     desc: "A production Flask dashboard that hosts many machine-learning models: tabular and image-based, behind a plugin architecture",
-    tags: ["SQL", "Power BI", "Excel"],
+    tags: ["Python", "Flask", "scikit-learn", "TensorFlow", "Bootstrap"],
     difficulty: "Easy",
-    code: "None",
+    code: "https://github.com/Laxman-19/ML-Hub",
     demo: "None",
     longDesc: "ml-hub"                   
   },
   {
     name: "Olympics Analysis and Prediction",
-    thumbnail: "None",
+    thumbnail: "assets/Projects/Olympics Analysis Prediction.png",
     desc: "A Streamlit web app that explores 120 years of Olympic data through interactive charts and a medal map, and predicts the medal an athlete is most likely to win.",
     tags: ["Python", "Streamlit", "Pandas", "Plotly", "Scikit-learn"],
     difficulty: "Easy",
-    code: "None",
+    code: "https://github.com/Laxman-19/Olympics-Analysis-And-Prediction",
     demo: "None",
     longDesc: "olympics-analysis-and-prediction"                   
   }
@@ -93,7 +93,7 @@ window.PROJECTS_MAIN = [
 window.PROJECTS_FUN = [
   {
     name: "Movie Showcase",
-    thumbnail: "assets/Projects/MovieShowcase.png",
+    thumbnail: "assets/Projects/Movie Showcase.png",
     desc: "A genre-organized showcase of every movie I've watched, with dynamic listings and live TMDB posters.",
     tags: ["HTML", "CSS", "JavaScript"],
     difficulty: "intermediate",
@@ -103,7 +103,7 @@ window.PROJECTS_FUN = [
   },
   {
     name: "Siblings Bookverse",
-    thumbnail: "assets/Projects/Bookshelf.png",
+    thumbnail: "assets/Projects/BookVerse.png",
     desc: "A shared digital bookshelf displaying the books read by me and my sibling, side by side.",
     tags: ["HTML", "CSS", "JavaScript"],
     difficulty: "easy",
@@ -113,7 +113,7 @@ window.PROJECTS_FUN = [
   },
   {
     name: "SidTrails",
-    thumbnail: "None",
+    thumbnail: "assets/Projects/SidTrails.png",
     desc: "My personal travel dashboard — every place I've been, every place I want to go, and the adventures along the way.",
     tags: ["HTML", "CSS", "JavaScript"],
     difficulty: "intermediate",
