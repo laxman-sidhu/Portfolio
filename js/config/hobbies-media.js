@@ -4,19 +4,17 @@ window.HOBBIES_MEDIA = {
   "Beach": [
     "IMG-20240626-WA0012.jpg"
     , 
+    "IMG-20240629-WA0225.jpg"
+    , 
     "IMG-20240722-WA0020.jpg"
     , 
-    "IMG-20240730-WA0009.jpg"
+    "IMG-20240722-WA0025.jpg"
     , 
-    "IMG-20251012-WA0052.jpg"
+    "IMG-20240730-WA0009.jpg"
     , 
     "IMG-20251012-WA0060.jpg"
     , 
     "IMG-20251012-WA0115.jpg"
-    , 
-    "IMG-20251012-WA0118.jpg"
-    , 
-    "IMG-20251012-WA0126.jpg"
     , 
     "1000025131-01.jpeg"
     , 
@@ -26,33 +24,39 @@ window.HOBBIES_MEDIA = {
     , 
     "WhatsApp Image 2025-07-10 at 4.16.24 PM.jpeg"
     , 
-    "WhatsApp Image 2025-07-10 at 4.16.27 PM.jpeg"
-    , 
     "WhatsApp Image 2025-07-10 at 4.16.28 PM (1).jpeg"
     , 
     "WhatsApp Image 2025-07-19 at 11.21.11 AM (15).jpeg"
+    , 
+    "WhatsApp Image 2025-07-19 at 4.38.15 PM (1).jpeg"
+    , 
+    "20240617_091157.mp4"
   ]
   , 
   "Cycling": [
-    "1.jpeg"
+    "IMG-20240624-WA0028.jpg.jpeg"
     , 
-    "2.jpeg"
+    "IMG-20240624-WA0036.jpg.jpeg"
     , 
-    "3.jpeg"
-    , 
-    "4.jpeg"
-    , 
-    "5.jpeg"
-    , 
-    "aa.jpeg"
-    , 
-    "aaa.jpeg"
+    "IMG-20240624-WA0174.jpg.jpeg"
     , 
     "IMG-20240624-WA0178.jpg.jpeg"
     , 
     "IMG-20240624-WA0182.jpg.jpeg"
     , 
+    "IMG-20240624-WA0204.jpg.jpeg"
+    , 
+    "IMG-20240624-WA0324.jpg.jpeg"
+    , 
+    "IMG-20240624-WA0360.jpg.jpeg"
+    , 
+    "IMG-20240629-WA0168.jpg.jpeg"
+    , 
+    "IMG-20240629-WA0195.jpg.jpeg"
+    , 
     "IMG-20240629-WA0210.jpg.jpeg"
+    , 
+    "IMG-20240629-WA0211.jpg.jpeg"
     , 
     "IMG-20240629-WA0227.jpg.jpeg"
     , 
@@ -104,9 +108,9 @@ window.HOBBIES_MEDIA = {
     , 
     "3.jpeg"
     , 
-    "6.jpeg"
-    , 
     "7.jpeg"
+    , 
+    "IMG-20240624-WA0249.jpg.jpeg"
     , 
     "4.mp4"
     , 
